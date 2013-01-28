@@ -1,0 +1,18 @@
+= render 'timeline/notifications'
+
+= render 'users'
+
+.back-to-home
+  = link_to 'Change my three favorite', root_path
+
+.update-button
+  = link_to "<i class=\"icon-refresh icon-white\"></i> #{I18n.t('timeline.show.button')}".html_safe, '#', class: 'update-tweets btn btn-primary btn-large'
+
+= render 'timeline'
+
+.update-button
+  = link_to "<i class=\"icon-refresh icon-white\"></i> #{I18n.t('timeline.show.button')}".html_safe, '#', class: 'update-tweets btn btn-primary btn-large'
+
+- if @tweets.any?
+  .back-to-top
+    = link_to 'Back to top &uarr;'.html_safe, '#', id: 'back-to-top'

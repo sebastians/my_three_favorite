@@ -1,0 +1,23 @@
+%h1= I18n.t('timeline.index.title')
+
+.row-fluid
+  #home
+    .span-6
+      .image
+        = image_tag 'http://farm5.staticflickr.com/4080/4802869688_cdc82146a0_n.jpg', class: 'img-circle'
+        %p.small= "Photo by: #{link_to 'Hubert Figuière', 'http://www.flickr.com/people/hfiguiere/', target: '_blank'}".html_safe
+      .intro
+        %h3= I18n.t('timeline.index.intro').html_safe
+
+.row-fluid
+  #form
+    = form_tag('/timeline', method: 'post') do
+      .span-12
+        .field
+          = text_field_tag('profile_names[]', nil, placeholder: 'First username', id: 'username_1')
+        .field
+          = text_field_tag('profile_names[]', nil, placeholder: 'Second username', id: 'username_2')
+        .field
+          = text_field_tag('profile_names[]', nil, placeholder: 'Third username', id: 'username_3')
+      .button
+        = submit_tag("Get timeline", class: 'btn btn-primary btn-large')

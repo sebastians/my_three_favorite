@@ -1,0 +1,14 @@
+#tweets
+  - if @tweets.any?
+    - @tweets.each do |tweet|
+      .row-fluid
+        .well
+          .image-wrapper= image_tag tweet.user.profile_image_url, class: 'img-circle'
+          = link_to tweet.user.screen_name, "http://twitter.com/#{tweet.user.screen_name}", target: '_blank'
+          = tweet.text
+          %br/
+          %br/
+          .small= tweet.created_at.strftime('%b/%d/%Y - %H:%M:%S')
+
+  - else
+    %h4= I18n.t('timeline.show.no_tweets')

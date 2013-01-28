@@ -1,0 +1,18 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  app:
+    name: "My Three Favorite"
+  timeline:
+    index:
+      title: "My Three Favorite"
+      intro: "Tired of all the noise in Twitter?\n Want to see a conversation between people you don't follow?\n <b>My Three Favorite</b> is here for you. \n Just type your three favorite users name and we'll get their most recent tweets for you."
+    show:
+      title: "Your Three Favorite"
+      button: "Update timeline"
+      no_users: "Woops! Something went wrong check that usernames are spelled correctly and try again"
+      no_tweets: "Woops! No tweets were found, something went wrong try again"
+      notify:
+        update: "The timeline was updated"
+        failure: "Something went wrong, try again"

@@ -1,0 +1,9 @@
+#update-notification{style: "display: none;"}
+  .alert.alert-success
+    %span= I18n.t('timeline.show.notify.update')
+    = link_to "x", "#", class: "close"
+
+#failure-notification{style: "display: none;"}
+  .alert.alert-error
+    %span= I18n.t('timeline.show.notify.failure')
+    = link_to "x", "#", class: "close"

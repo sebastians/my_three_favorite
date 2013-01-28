@@ -1,0 +1,16 @@
+#users
+  - if @users.any?
+    %h1= I18n.t('timeline.show.title')
+    .row-fluid
+      .span-12
+        - @users.each_with_index do |user, index|
+          .user-details
+            .image-wrapper= image_tag user.profile_image_url, class: 'img-circle'
+            = link_to user.screen_name, "http://twitter.com/#{user.screen_name}", target: '_blank'
+            %br/
+            = user.description
+
+          %p{id: "user-id-#{index}", style: "display: none;"}= user.screen_name
+
+  - else
+    %h4= I18n.t('timeline.show.no_users')

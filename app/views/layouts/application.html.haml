@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %title= I18n.t('app.name')
+    = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "application"
+    %meta{name:"viewport", content: "width=device-width, initial-scale=1.0"}
+    = csrf_meta_tags
+  %body
+    .container
+      = yield
+    #footer
+      %span= "Made with love by #{link_to 'Sebastian Sogamoso', 'https://github.com/sebasoga'}, #{Date.today.year}".html_safe
+      %span.cell= link_to 'Report an issue', 'https://github.com/sebasoga/my_three_favorite/issues'
+      %span.cell= link_to 'View source code', 'https://github.com/sebasoga/my_three_favorite'
