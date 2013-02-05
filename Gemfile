@@ -18,6 +18,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'rake'
 end
 
 group :test, :development do

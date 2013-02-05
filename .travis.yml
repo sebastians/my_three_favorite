@@ -1,0 +1,15 @@
+---
+language: ruby
+rvm:
+  - 1.9.3
+env:
+  global:
+    - secure: "DJuGhrKh1AirldosMzwEeHkwwCM74eVHwxj1muYuqt4m1nZUKQeMc6jwE5hU\nnrYB7Ftfr4hXqn4fLktLK8G4sU03YF55c+EpSJzBVhB963Fe7xCvC3eeMNdv\n1w6fl34kvyIb7BYWhnPOsx2eYMQ3QhpK9opVmveR/1fl7l4EKGM="
+    - secure: "fFMSLP2R+yC0BtIweGHhZs1uK9YMSAy/baNYQlVGxddeSrYPUwnzgN4nSohT\niSZPoHyTcXmSPQOIqgk95Q+uXPl/dohYqUYJ0H5OBHQRqomxhz/VU8bn94U1\nbhqEjrA30KFd/eKJckICkssrqUvOmb0WFdXfTxR8NQ3TDoOMh08="
+    - secure: "ZX6G6o0r0wxFlNaAGEG1A2AhlSPTEQMPvJGmqQEAyl6yZjLvVO4lWEtWZTox\nqKimQWrrSLG4kp8BZuBIIY5TTrWse8Yi5rHt3A8h5tpoQHUZsJgteZ4mlpqb\n5H8tHlTj/yZdygb7xDV9IIokHLnYgsNbMiHrZYLh5Z5C46EpNz4="
+    - secure: "Mib7AKcERadtRQQ07sZoEERHT0eesas4BKQusALT+h2fcxyDGYg0vJlLoLMU\nqLwZd9GB35c0b5A0SOM1PLWyGTpEwwmHvr/zJm6+iO+be6lI9LwVjijIIbNH\nw8AYl+eXra+Z0RfQ2lZzuqD3Z4++C6wlMo4b4nCM7KEWHLR8+7k="
+script:
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec spec/
+before_script:
+  - psql -c 'create database my_three_favorite_test;' -U postgres
