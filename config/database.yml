@@ -2,7 +2,6 @@ default: &local_defaults
   adapter: postgresql
   host: localhost
   encoding: utf8
-  username: postgres
   pool: 5
 
 development:
