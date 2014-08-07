@@ -27,7 +27,7 @@ module MyThreeFavorite
       begin
         build_response_array
       rescue Twitter::Error::TooManyRequests, Twitter::Error::NotFound => error
-        Rails.logger.info "An error occurred #{error.message}"
+        Rails.logger.info "An error occurred #{error.to_s}"
         []
       end
     end

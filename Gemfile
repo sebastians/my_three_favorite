@@ -1,16 +1,16 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '4.1.4'
 gem 'pg'
-gem 'haml-rails'
-gem 'sass-rails', '~> 3.2'
+gem 'haml-rails', '~> 0.5.3'
+gem 'sass-rails', '~> 4.0.3'
 gem 'anjlab-bootstrap-rails', '>= 2.2', :require => 'bootstrap-rails'
 gem 'jquery-rails'
 gem 'thin'
-gem 'twitter'
+gem 'twitter', '~> 4.8.1'
 
 group :assets do
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'coffee-rails', '~> 4.0.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'therubyracer', :platforms => :ruby
   gem 'quiet_assets'
@@ -22,5 +22,5 @@ group :test do
 end
 
 group :test, :development do
-  gem "rspec-rails", "~> 2.0"
+  gem "rspec-rails", "~> 3.0"
 end

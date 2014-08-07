@@ -3,7 +3,7 @@ require 'spec_helper'
 describe MyThreeFavorite::TwitterClient do
 
   describe "#new" do
-    let(:method_name) { 'user' }
+    let(:method_name)   { 'user' }
     let(:profile_names) { ['sebasoga', ''] }
 
     it "removes empty strings from params" do
@@ -25,24 +25,30 @@ describe MyThreeFavorite::TwitterClient do
   end
 
   describe ".get" do
-    let(:method_name) { :user }
+    let(:method_name)   { :user }
     let(:profile_names) { ['sebasoga', 'wehostels'] }
 
+    before do
+      rails = double(:rails)
+      stub_const("Rails", rails)
+      allow(rails).to receive_message_chain(:logger, :info).with(anything)
+    end
+
     it "creates an instance of TwitterClient class" do
-      MyThreeFavorite::TwitterClient.should_receive(:new)
+      expect(MyThreeFavorite::TwitterClient).to receive(:new)
         .with(method_name, profile_names, false) { double.as_null_object }
       MyThreeFavorite::TwitterClient.get(method_name, profile_names, false)
     end
 
     it "sends 'get' message to a TwitterClient instance" do
       twitter_client_instance = double.as_null_object
-      MyThreeFavorite::TwitterClient.stub(new: twitter_client_instance)
-      twitter_client_instance.should_receive(:get)
+      allow(MyThreeFavorite::TwitterClient).to receive(:new) { twitter_client_instance }
+      expect(twitter_client_instance).to receive(:get)
       MyThreeFavorite::TwitterClient.get(method_name, profile_names)
     end
 
     it "sends 'method_name' message to Twitter class" do
-      Twitter.should_receive(method_name).exactly(profile_names.count).times
+      allow(Twitter).to receive(method_name).exactly(profile_names.count).times
       MyThreeFavorite::TwitterClient.get(method_name, profile_names)
     end
 
@@ -51,7 +57,7 @@ describe MyThreeFavorite::TwitterClient do
       let(:old_element) { double(created_at: Time.now - 1.day) }
 
       it "returns an array of elements ordered from the most recent to the most old one" do
-        Twitter.stub(user: [old_element, new_element])
+        allow(Twitter).to receive(:user) { [old_element, new_element] }
         expect(
           MyThreeFavorite::TwitterClient.get(method_name, ['sebasoga'], true)
           ).to eq [new_element, old_element]
@@ -63,7 +69,7 @@ describe MyThreeFavorite::TwitterClient do
       let(:old_element) { double(created_at: Time.now - 1.day) }
 
       it "returns an array of elements in the same order they are returned by Twitter class" do
-        Twitter.stub(user: [old_element, new_element])
+        allow(Twitter).to receive(:user) { [old_element, new_element] }
         expect(
           MyThreeFavorite::TwitterClient.get(method_name, ['sebasoga'], false)
           ).to eq [old_element, new_element]
@@ -72,7 +78,7 @@ describe MyThreeFavorite::TwitterClient do
 
     context "when Twitter:Error::TooManyRequests is raised" do
       it "assigns @tweets an empty array" do
-        Twitter.stub(method_name) { raise Twitter::Error::TooManyRequests }
+        expect(Twitter).to receive(method_name) { raise Twitter::Error::TooManyRequests }
         expect(
           MyThreeFavorite::TwitterClient.get(method_name, profile_names)
           ).to eq []
@@ -81,7 +87,7 @@ describe MyThreeFavorite::TwitterClient do
 
     context "when Twitter:Error::NotFound is raised" do
       it "assigns @tweets an empty array" do
-        Twitter.stub(method_name) { raise Twitter::Error::NotFound }
+        allow(Twitter).to receive(method_name) { raise Twitter::Error::NotFound }
         expect(
           MyThreeFavorite::TwitterClient.get(method_name, profile_names)
           ).to eq []

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TimelineController do
+describe TimelineController, type: :controller do
 
   describe "GET #index" do
     it "renders the 'timeline/index' view" do
@@ -16,7 +16,7 @@ describe TimelineController do
 
   describe "POST #create" do
     it "sends 'get' message to MyThreeFavorite::TwitterClient class" do
-      MyThreeFavorite::TwitterClient.should_receive(:get).exactly(2).times
+      expect(MyThreeFavorite::TwitterClient).to receive(:get).exactly(2).times
       post :create, profile_names: ['name']
     end
 
@@ -27,7 +27,7 @@ describe TimelineController do
 
     context "instance variables" do
       let(:response) { double.as_null_object }
-      before { MyThreeFavorite::TwitterClient.stub(get: response) }
+      before { allow(MyThreeFavorite::TwitterClient).to receive(:get) { response } }
 
       it "assigns @users an empty array" do
         put :create, {}
@@ -43,21 +43,23 @@ describe TimelineController do
 
   describe "PUT #update" do
     it "sends 'update' message to Timeline class" do
-      MyThreeFavorite::TwitterClient.should_receive(:get).with(:user_timeline, ['name'], true)
+      expect(
+        MyThreeFavorite::TwitterClient
+      ).to receive(:get).with(:user_timeline, ['name'], true)
       put :update, profile_names: ['name']
     end
 
     it "renders 'timeline' partial" do
-      MyThreeFavorite::TwitterClient.stub(:get)
+      expect(MyThreeFavorite::TwitterClient).to receive(:get)
       post :update, {}
-      expect(response).to render_template :timeline
+      expect(response).to render_template 'timeline/_timeline'
     end
 
     context "instance variable" do
       let(:tweet) { double.as_null_object }
 
       it "assigns @tweets Twitter client's response" do
-        MyThreeFavorite::TwitterClient.stub(get: [tweet])
+      expect(MyThreeFavorite::TwitterClient).to receive(:get) { [tweet] }
         put :update, {}
         expect(assigns[:tweets]).to eq [tweet]
       end
